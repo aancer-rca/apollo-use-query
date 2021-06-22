@@ -3,7 +3,10 @@ import { InMemoryCache, ReactiveVar, makeVar } from "@apollo/client";
 import { IUser } from "./models/User.model";
 
 export const cache: InMemoryCache = new InMemoryCache({
-  typePolicies: {
+  typePolicies: {    
+    activeUser: {
+    keyFields: ['id']
+  },
     Query: {
       fields: {
         activeUser: {
