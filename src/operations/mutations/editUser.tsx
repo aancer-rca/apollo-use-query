@@ -3,10 +3,11 @@ import { gql } from "@apollo/client";
 import { GET_ACTIVE_USER } from "../queries/getUser";
 
 export const UPDATE_ACTIVE_USER = gql`
-  mutation UpdateActiveUser($id: integer!, $name: String!) {
-    updateActiveUser(id: $id, name: $name) @client { 
+  mutation UpdateActiveUser($id: integer!, $name: String!, $age: integer!) {
+    updateActiveUser(id: $id, name: $name, age: $age) @client { 
       id  
       name
+      age
     }
   }
 `
@@ -14,8 +15,9 @@ export const UPDATE_ACTIVE_USER = gql`
 export const updateUserCache = (cache, { data }) =>
 {
   console.log(cache.data.data);
+  console.log(data);
   // Fetch the user from the cache
-  const existingUser = cache.readQuery({
+  const existingData = cache.readQuery({
     query: GET_ACTIVE_USER
   });
 
@@ -23,6 +25,6 @@ export const updateUserCache = (cache, { data }) =>
   const newUser = data.updateActiveUser;
   cache.writeQuery({
     query: GET_ACTIVE_USER,
-    data: { activeUser: { ...existingUser, ...newUser } }
+    data: { activeUser: { ...existingData.activeUser,...newUser } }
   });
 }

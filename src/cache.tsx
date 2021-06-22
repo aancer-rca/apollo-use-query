@@ -10,8 +10,8 @@ export const cache: InMemoryCache = new InMemoryCache({
     Query: {
       fields: {
         activeUser: {
-          read () {
-            return userVar();
+          read (activeUser) {
+            return activeUser || userInitialValue;
           }
         }
       }
